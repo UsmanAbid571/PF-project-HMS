@@ -1,0 +1,47 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  Makefile — Hospital Management System
+#  Usage:
+#    make          → compile everything → produces ./hms
+#    make run      → compile and run
+#    make clean    → remove compiled files
+# ─────────────────────────────────────────────────────────────────────────────
+
+CXX      = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -I headers/
+TARGET   = hms
+
+SRCS = main.cpp \
+       modules/file_cleaning.cpp \
+       modules/login.cpp \
+       modules/patient.cpp \
+       modules/doctor.cpp \
+       modules/appointment.cpp \
+       modules/treatment.cpp \
+       modules/billing.cpp \
+       modules/search.cpp \
+       modules/bonus.cpp
+
+OBJS = $(SRCS:.cpp=.o)
+
+# ── Default target ────────────────────────────────────────────────────────────
+all: $(TARGET)
+	@echo ""
+	@echo "  Build successful! Run with:  ./$(TARGET)"
+	@echo ""
+
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# ── Run target ────────────────────────────────────────────────────────────────
+run: all
+	./$(TARGET)
+
+# ── Clean target ──────────────────────────────────────────────────────────────
+clean:
+	rm -f $(OBJS) $(TARGET)
+	@echo "  Cleaned."
+
+.PHONY: all run clean
