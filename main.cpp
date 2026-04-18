@@ -1,5 +1,6 @@
 #include<iostream>
 #include"headers/login.h"
+#include"headers/cleaning.h"
     
 using namespace std;
 int main()
@@ -8,5 +9,6 @@ int main()
     string password="pass123";
     validateCredentials( empId, password);
     login();
+    cleanFile();
     return 0;
 }

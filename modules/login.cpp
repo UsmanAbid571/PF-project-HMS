@@ -8,7 +8,7 @@ bool validateCredentials(const string& empId, const string& password) {
 }
 
 bool login() {
-    printHeader("Hospital Management System — Login");
+    printHeader("Hospital Management System - Login");
 
     const int MAX_ATTEMPTS = 3;
 

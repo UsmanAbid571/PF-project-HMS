@@ -1,0 +1,6 @@
+Term	            Meaning
+ss	           string stream used to read parts of a string
+tok	           temporary variable storing each piece of data
+getline()	   extracts text until a delimiter
+stoi()	       converts string → integer
+stod()	       converts string → double
