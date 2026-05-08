@@ -18,23 +18,26 @@ void displayWeeklySchedule(int docId){
 
     cout<<"             ";
     for(int s=0;s<8;s++){
-        cout<<CYAN<<setw(7)<<TIME_SLOTS[s]<<RESET;
+        cout<<CYAN<<setw(10)<<TIME_SLOTS[s]<<RESET;
     }
     cout<<"\n";
     printDivider('-', 70);
 
-    for(int day=0;day<5;day++){
-        cout<<BOLD<<DAY_NAMES[day]<<" |"<<RESET;
-        for(int slot=0;slot<8;slot++){
-            if(weeklySchedule[day][slot] == 0){
-                cout<<GREEN<<setw(6)<<"Free"<<RESET;
-            } else {
-                cout<<YELLOW<<setw(6)<<weeklySchedule[day][slot]<<RESET<<" ";
-            }
+    for(int day = 0; day < 5; day++){
+        cout << left << setw(10) << DAY_NAMES[day] << "|";
+
+    for(int slot = 0; slot < 8; slot++){
+        if(weeklySchedule[day][slot] == 0){
+            cout <<GREEN<< setw(10) << "Free"<<RESET;
+        } 
+        else {
+            cout<<YELLOW << setw(10) << to_string(weeklySchedule[day][slot])<<RESET;
         }
-        cout<<"\n";
     }
-    printDivider('=', 70);
+    cout << "\n";
+}
+
+printDivider('=', 90);
 }
 
 void bookSlotIfFree(int day, int slot, int patientId){

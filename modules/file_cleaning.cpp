@@ -23,15 +23,28 @@ string fixDate(string d)
 }
 
 string fixTime(string t){
-    if(t.find(':')!=string::npos) return t;
-    
-        int hour=stoi(t);
-        string am_pm= (hour>=12) ? "PM" : "AM";
-        if(hour==0) hour=12;
-        else if(hour>12) hour-=12;
 
-        string hourStr= (hour<10) ? "0"+to_string(hour) : to_string(hour);
-        return hourStr+":00 "+am_pm;
+    if(t.find("AM")!=string::npos || t.find("PM")!=string::npos)
+        return t;
+
+    int h,m;
+
+    if(sscanf(t.c_str(),"%d:%d",&h,&m)!=2)
+        return "09:00 AM";
+
+    string mer="AM";
+
+    if(h>=12){
+        mer="PM";
+        if(h>12) h-=12;
+    }
+
+    if(h==0) h=12;
+
+    char buf[10];
+    sprintf(buf,"%02d:%02d %s",h,m,mer.c_str());
+
+    return string(buf);
 }
 
 bool isValidContact(const string& c){
@@ -156,61 +169,38 @@ static void cleanDoctorsFile(){
     cout << GREEN << "  [Cleaned] doctors.txt   - " << count << " valid record(s) kept." << RESET << "\n";
 }
 
-static void cleanAppointmentsFile(){
-    ifstream inFile(APPOINTMENTS_FILE);
-    if(!inFile){
-        cerr<<RED<<"Error opening appointments file for cleaning."<<RESET<<endl;
-        return;
-    }
-    struct RawAppt{
-        int pid;
-        int did;
-        string date;
-        string time;
-    };
-    RawAppt temp[MAX_RECORDS];
-    int count=0;
-    string line;
-    while(getline(inFile,line) && count<MAX_RECORDS){
-        if(line.empty()) continue;
+static void cleanAppointmentsFile() {
+    ifstream fin(APPOINTMENTS_FILE);
+    if (!fin.is_open()) return;
 
+    struct RawAppt { int pid; int did; string date; string time; };
+    RawAppt temp[MAX_RECORDS];
+    int count = 0;
+    string line;
+
+    while (getline(fin, line) && count < MAX_RECORDS) {
+        if (line.empty()) continue;
         istringstream ss(line);
-        RawAppt a;
         string tok;
+        RawAppt a;
         string sDate, sTime;
 
-        if(!getline(ss,tok,'#')) continue;
-        try{
-            a.pid = stoi(tok);
-        }
-        catch(...){
-            continue;
-        }
+        if (!getline(ss, tok,   '#')) continue; a.pid  = stoi(tok);
+        if (!getline(ss, tok,   '#')) continue; a.did  = stoi(tok);
+        if (!getline(ss, sDate, '#')) continue; a.date = fixDate(sDate);
+        if (!getline(ss, sTime, '#')) sTime = "09:00 AM"; a.time = fixTime(sTime);
 
-        if(!getline(ss,tok,'#')) continue;
-         try {
-            a.did = stoi(tok);
-        }
-        catch (...) {
-          continue;
-        }
-
-        if(!getline(ss,sDate,'#')) continue;
-        a.date = fixDate(sDate);
-        if(!getline(ss,sTime,'#')) sTime = "09:00 AM"; a.time = fixTime(sTime);
-
-        if(a.pid>0 && a.did>0 ){
-            temp[count++]=a;
-        }
+        if (a.pid > 0 && a.did > 0)
+            temp[count++] = a;
     }
-    inFile.close();
+    fin.close();
 
-    ofstream outFile(APPOINTMENTS_FILE);
+    ofstream fout(APPOINTMENTS_FILE);
     for (int i = 0; i < count; i++)
-        outFile << temp[i].pid << "#" << temp[i].did << "#"
+        fout << temp[i].pid << "#" << temp[i].did << "#"
              << temp[i].date << "#" << temp[i].time << "\n";
-    outFile.close();
-    cout<< GREEN << "  [Cleaned] appointments.txt  - " << count << " valid record(s) kept." << RESET << "\n";
+    fout.close();
+    cout << GREEN << "  [Cleaned] appointments.txt - " << count << " valid record(s) kept." << RESET << "\n";
 }
 
 static void cleanTreatmentsFile(){
@@ -235,7 +225,8 @@ static void cleanTreatmentsFile(){
             continue;
         }
         if (!getline(ss, t.description,'#')) continue;
-        if (!getline(ss, tok,         '#'))try{
+        if (!getline(ss, tok,'#')) continue;
+        try{
             t.cost = stod(tok);
         }
         catch(...){

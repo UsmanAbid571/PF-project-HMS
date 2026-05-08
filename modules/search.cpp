@@ -92,7 +92,7 @@ void searchDoctorById() {
     cout<<"  ID       : "<<d.doc_id<<"\n"
         <<"  Name     : "<<d.name<<"\n"
         <<"  Speciality: "<<d.specialty<<"\n"
-        <<"  Contact  : "<<d.experience<<"\n";
+        <<"  Experience  : "<<d.experience<<" yrs"<<"\n";
     printDivider('-', 50);
     pressEnter();
 }

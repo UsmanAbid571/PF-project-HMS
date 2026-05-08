@@ -11,12 +11,19 @@ struct Bill {
 
 static bool parseLine(const string& line, Bill& b) {
     if(line.empty()) return false;
+
     istringstream ss(line);
     string tok;
 
-    if(!getline(ss,tok,'#')) return false; b.patientId = stoi(tok);
-    if(!getline(ss,tok,'#')) return false; b.amount = stod(tok);
-    if(!getline(ss,tok,'#')) return false; b.status = "Unpaid";
+    if(!getline(ss,tok,'#')) return false;
+    b.patientId = stoi(tok);
+
+    if(!getline(ss,tok,'#')) return false;
+    b.amount = stod(tok);
+
+    if(!getline(ss,tok,'#')) return false;
+    b.status = tok;   // ✅ FIXED
+
     return true;
 }
 
@@ -77,7 +84,7 @@ void updatePayment(){
     }
     arr[indices[sel-1]].status = "Paid";
 
-    ofstream f(BILLS_FILE);
+    ofstream f(BILLS_FILE,ios::trunc);
     for(int i=0;i<n;i++){
         writeBill(f,arr[i]);
     }
