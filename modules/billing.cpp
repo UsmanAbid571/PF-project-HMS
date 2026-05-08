@@ -43,6 +43,7 @@ void updatePayment(){
     int pid;
     cout<<"\n Enter Patient ID: ";
     cin>>pid;
+    cin.ignore();
 
     Bill arr[MAX_RECORDS];
     int n=loadBills(arr, MAX_RECORDS);
@@ -62,15 +63,15 @@ void updatePayment(){
     }
 
     if (cnt == 0) {
-        cout << YELLOW << "  No unpaid bills found for this patient.\n" << RESET;
+        cout<<YELLOW<<"  No unpaid bills found for this patient.\n" << RESET;
         pressEnter();
         return;
     }
-    cout<<"\n Enter # to mark as Paid (1-"<<cnt<<"): ";
+    cout<<"\n Enter 0 to mark as Paid (1-"<<cnt<<"): ";
     int sel;
     cin>>sel;
     if(sel < 1 || sel > cnt){
-        cout << RED << "\n  Invalid selection.\n" << RESET;
+        cout<<RED<<"\n  Invalid selection.\n" << RESET;
         pressEnter();
         return;
     }

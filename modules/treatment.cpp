@@ -130,7 +130,7 @@ void viewTreatmentByDoctor(){
     }
 
     Doctor doc = findDoctorById(docId);
-    cout<<"\n Treatments for patients of Dr. "<<doc.name<<": \n\n";
+    cout<<"\n Treatments for patients of "<<doc.name<<": \n\n";
 
     Treatment arr[MAX_RECORDS];
     int n=loadAll(arr,MAX_RECORDS);

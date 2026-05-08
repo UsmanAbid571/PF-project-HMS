@@ -2,6 +2,7 @@
 #include "../headers/patient.h"
 #include "../headers/doctor.h"
 #include "../headers/globals.h"
+#include "../headers/cleaning.h"
 #include<cstring>
 
 static bool parseLine(const string& line, Appointment& a) {
@@ -16,8 +17,16 @@ static bool parseLine(const string& line, Appointment& a) {
 
     a.patientId = stoi(pid);
     a.doctorId = stoi(did);
-    strncpy(a.date, date.c_str(), sizeof(a.date)-1);
-    strncpy(a.time, time.c_str(), sizeof(a.time)-1);
+
+
+    cout<<"[Debug] Raw date: "<<date<<" | Raw time: "<<time<<"\n";
+
+    string fixedD=fixDate(date);
+    strncpy(a.date, fixedD.c_str(), sizeof(a.date)-1);
+    a.date[sizeof(a.date)-1] = '\0';
+    string fixed = fixTime(time);
+    strncpy(a.time, fixed.c_str(), sizeof(a.time)-1);
+    a.time[sizeof(a.time)-1] = '\0';
     return true;
 }
 
@@ -117,7 +126,7 @@ void cancelAppointment(){
     cout<< YELLOW<<"\n Appointment on "<<arr[index].date<<" at "<<arr[index].time<<" - Cancel? (y/n): "<< RESET;
     char choice; 
     cin>>choice;
-    if(choice == 'y' || choice == 'Y') {
+    if(choice != 'y' && choice != 'Y') {
         cout<<" Cancelled.\n";
         pressEnter();
         return;
