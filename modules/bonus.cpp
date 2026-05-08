@@ -12,19 +12,19 @@ void displayWeeklySchedule(int docId){
     Doctor d = findDoctorById(docId);
     string docName = (d.doc_id != -1) ? d.name : "Unknown Doctor";
 
-    printDivider('=', 70);
-    cout<<BOLD<<BLUE<<"\n Weekly Schedule - "<<docName<<" (ID: "<<docId<<")\n"<<RESET<<"\n";
-    printDivider('=', 70);
+    printDivider('=', 90);
+    cout<<BOLD<<BLUE<<"\n\t\t Weekly Schedule - "<<docName<<" (ID: "<<docId<<")\n"<<RESET<<"\n";
+    printDivider('=', 90);
 
     cout<<"             ";
     for(int s=0;s<8;s++){
         cout<<CYAN<<setw(10)<<TIME_SLOTS[s]<<RESET;
     }
     cout<<"\n";
-    printDivider('-', 70);
+    printDivider('-', 90);
 
     for(int day = 0; day < 5; day++){
-        cout << left << setw(10) << DAY_NAMES[day] << "|";
+        cout << left << setw(10) << DAY_NAMES[day] << "|  ";
 
     for(int slot = 0; slot < 8; slot++){
         if(weeklySchedule[day][slot] == 0){
