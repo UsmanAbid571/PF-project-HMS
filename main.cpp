@@ -90,11 +90,11 @@ static void showMainMenu() {
             case 5: billingMenu();     break;
             case 6: searchMenu();      break;
             case 7: bonusMenu();       break;
-            case 0:
+            case 8:
                 cout<<"\n"<<GREEN<<"  Goodbye! Freeing memory and exiting.\n" << RESET <<"\n";
                 break;
             default:
-                cout<<RED<<"  Invalid choice. Please enter 0-7.\n" << RESET;
+                cout<<RED<<"  Invalid choice. Please enter 1-8.\n" << RESET;
         }
     } while (choice != 8);
 }
