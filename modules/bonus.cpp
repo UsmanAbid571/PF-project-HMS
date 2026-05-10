@@ -16,7 +16,7 @@ void displayWeeklySchedule(int docId){
     cout<<BOLD<<BLUE<<"\n\t\t Weekly Schedule - "<<docName<<" (ID: "<<docId<<")\n"<<RESET<<"\n";
     printDivider('=', 90);
 
-    cout<<"             ";
+    cout<<setw(13)<<"   ";
     for(int s=0;s<8;s++){
         cout<<CYAN<<setw(10)<<TIME_SLOTS[s]<<RESET;
     }

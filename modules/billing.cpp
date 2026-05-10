@@ -153,7 +153,7 @@ void generateBill(){
     }
 
     printDivider('=', 65);
-    cout<<BOLD<<BLUE<<"  HOSPITAL MANAGEMENT SYSTEM — PATIENT BILL\n"<<RESET;
+    cout<<BOLD<<BLUE<<"  HOSPITAL MANAGEMENT SYSTEM - PATIENT BILL\n"<<RESET;
     printDivider('=', 65);
     cout<<"  Patient Name   : "<<BOLD<<p.name<<RESET<<"\n";
     cout<<"  Patient ID     : "<<p.patientId<<"\n";

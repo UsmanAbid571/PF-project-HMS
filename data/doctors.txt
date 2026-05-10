@@ -33,3 +33,4 @@
 233#Dr. Kiran Malik#Family Medicine#5
 234#Dr. Ghulam Nabi#Internal Medicine#17
 235#Dr. Uzma Fatima#Clinical Pathology#6
+240#Dr. Usman Ashraf#Dentist#5
